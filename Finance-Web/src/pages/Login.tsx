@@ -35,12 +35,12 @@ function Login() {
 
   return (
   <>
-    <div className="w-screen h-screen p-4">
-      <div>
+    <div className="noise gradt w-screen h-screen p-4">{/*Fundo*/}
+      <div className='relative z-10'>{/*Titulo login*/}
         <h1 className='h-1/6 m-auto text-center text-3xl font-bold text-white'>LOGIN</h1>
       </div>
-      <div className='h-5/6 flex flex-col justify-center'>
-        <div className='bg-white h-2/5 w-80 md:w-2/6 md:h-1/3 m-auto rounded-lg flex flex-col justify-center'>{/*div-botao*/}
+      <div className='relative z-10 h-5/6 flex flex-col justify-center'>{/*primeiro corpo*/}
+        <div className='bg-white h-2/5 w-80 md:w-2/6 md:h-1/3 m-auto rounded-lg flex flex-col justify-center'>{/*caixa central*/}
         <div className='text-center'>{/*div-email*/}
           <p>
             Email
@@ -48,12 +48,7 @@ function Login() {
           <input type="email" 
           value={email} 
           onChange={(e)=>setEmail(e.target.value)} 
-          className='
-          bg-gray-200 
-          rounded-sm 
-          w-5/6 sm:w-10/12 lg:w-8/12 xl:w-1/2
-          mb-2.5
-          '/>
+          className='bg-gray-200 rounded-sm w-5/6 sm:w-10/12 lg:w-8/12 xl:w-1/2 mb-2.5  '/>
         </div>
         <div className='text-center'>{/*div-senha*/}
           <p>
@@ -62,12 +57,7 @@ function Login() {
           <input type="password" 
           value={password} 
           onChange={(e)=>setPassword(e.target.value)}
-          className='
-          bg-gray-200 
-          rounded-sm 
-          w-5/6 sm:w-10/12 lg:w-8/12 xl:w-1/2 
-          mb-2.5
-          '/>
+          className='bg-gray-200 rounded-sm w-5/6 sm:w-10/12 lg:w-8/12 xl:w-1/2 mb-2.5  '/>
         </div> 
         <div className='text-center'>{/*div-botao*/}
           <button onClick={handleLogin}

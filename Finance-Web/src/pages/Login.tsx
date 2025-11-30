@@ -1,8 +1,8 @@
+import '../index.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import reactLogo from '../assets/react.svg';
 import viteLogo from '../../public/sf.svg';
-import '../App.css';
 
 function Login() {
   const navigate=useNavigate();

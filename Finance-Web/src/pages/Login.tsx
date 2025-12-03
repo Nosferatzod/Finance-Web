@@ -10,8 +10,13 @@ function Login() {
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
   const [erro, setErro]=useState('');
+  const [isMenuOpen, setIsMenuOpen]=useState(false); 
 
-  const handleLogin=async()=>{{/*promise*/}
+  const toggleMenu=()=>{
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogin=async()=>{
     setErro('');
     try{
       const response=await fetch('http://localhost:8080/api/user/login', {
@@ -27,7 +32,6 @@ function Login() {
       const data=await response.json();
       const token=data.token;
       localStorage.setItem('meu_token_jwt', token);
-      {/*alert('Login successful!')*/}
       navigate('/home');
     }catch(error){
       setErro('Erro ao fazer ');
@@ -36,32 +40,43 @@ function Login() {
 
   return (
   <>
-    <div className="noise gradt w-screen h-screen">{/*Fundo*/}
+    <div className="noise gradt w-screen h-screen">
       <div className='relative z-10 menu'>
         <div className=''>
-          <IoIosArrowForward className='IoIosArrowForward'/>
+          <button onClick={toggleMenu}
+          className=''>
+            <IoIosArrowForward className='IoIosArrowForward'/>
+          </button>
+          {isMenuOpen && (
+            <div>
+              <a href="">teste</a>
+              <a href="">teste</a>
+            </div>
+          )}
         </div>
       </div>
-      <div className='relative z-10 h-screen flex flex-col justify-center'>{/*primeiro corpo*/}
-        <div className='bg-white h-80 w-80 md:h-6/12 md:w-2/6 m-auto rounded-lg flex flex-col justify-center'>{/*caixa central*/}
-        <div className='h-1/5 w-7/12 flex flex-col m-auto'>{/*div-email*/}
-          <p className='font-p'>
-            Email
-          </p>
-          <input type="email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-          className='bg-gray-300 rounded-sm w-5/6 h-6/12 sm:w-10/12 lg:w-8/12 xl:w-1/1 mb-2.5  '/>
-        </div>
-        <div className='h-1/5 w-7/12 flex flex-col m-auto'>{/*div-senha*/}
-          <p className='font-p'>
-            Password
-          </p>
-          <input type="password" 
-          value={password} 
-          onChange={(e)=>setPassword(e.target.value)}
-          className='bg-gray-300 rounded-sm w-5/6 h-6/12 sm:w-10/12 lg:w-8/12 xl:w-1/1 mb-2.5  '/>
-        </div> 
+      <div className='relative z-10 h-screen flex flex-col'>
+        <div className='bg-white h-80 w-85 sm:h-5/12 md:h-6/12 sm:w-3/5 md:w-3/5 lg:w-1/2 xl:w-1/3 m-auto rounded-lg flex flex-col justify-center'>{/*caixa central*/}
+          <div className='h-5/12 w-12/12 flex flex-col mb-8'>
+            <div className='h-1/1 w-4/6 m-auto'>{/*div-email*/}
+              <p className='font-p'>
+                Email
+              </p>
+              <input type="email"
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
+              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5'/>
+            </div>
+            <div className='h-1/1 w-4/6 flex flex-col m-auto'>{/*div-senha*/}
+              <p className='font-p'>
+                Password
+              </p>
+              <input type="password" 
+              value={password} 
+              onChange={(e)=>setPassword(e.target.value)}
+              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5  '/>
+            </div> 
+          </div>
         <div className='text-center'>{/*div-botao*/}
           <button onClick={handleLogin}
           className='

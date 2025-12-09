@@ -31,8 +31,8 @@ function Login() {
       }
       const data=await response.json();
       const token=data.token;
-      localStorage.setItem('meu_token_jwt', token);
-      navigate('/home');
+      localStorage.setItem('tokenJwt', token);
+      navigate('/user');
     }catch(error){
       setErro('Erro ao fazer ');
     }

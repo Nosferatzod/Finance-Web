@@ -22,21 +22,25 @@ export default function ExpandableMenu(){
         {isMenuOpen&&(
             <div className="bg-gray-200 font-p flex flex-col mt-30 z-20 p-1 rounded-sm">
                 <Link to="/">home</Link>
-                {currentPath==='/login'&& isLoggedIn(
+
+                {currentPath==='/login' && !isLoggedIn() &&(
                     <>
                         <Link to="/register">register</Link>
                     </>
                 )}
-                {currentPath==='/register'&&(
+
+                {currentPath==='/register'&& !isLoggedIn() &&(
                     <>
                         <Link to="/login">login</Link>
                     </>
                 )}
+
                 {isLoggedIn() && currentPath!=='/user' &&(
                     <>
                         <Link to="/user">menu</Link>
                     </>
                 )}
+
                 {isLoggedIn()&&(
                     <>
                         <LogoutButton/>

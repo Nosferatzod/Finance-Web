@@ -1,10 +1,10 @@
 import '../index.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IoIosArrowForward } from "react-icons/io";
 import { useAuth } from '../hooks/useAuth';
 import ExpandableMenu from '../components/ExpandableMenu';
-import LogoutButton from '../components/LogoutButton';
+import { Button } from '../components/Button';
+import { Logo } from '../components/Logo';
 
 function Login() {
   const navigate=useNavigate();
@@ -18,10 +18,11 @@ function Login() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogin=async()=>{
+  const handleLogin=async(e:React.FormEvent)=>{
+    e.preventDefault();
     setErro('');
     try{
-      const response=await fetch('http://localhost:8080/api/user/login', {
+      const response=await fetch('http://localhost:8080/api/users/login', {
         method: 'POST',
         headers:{
           'Content-Type':'application/json',
@@ -42,12 +43,20 @@ function Login() {
 
   return (
   <>
-    <div className="noise gradt w-screen h-screen">
-      <div>
+    <div className="noise gradt w-screen h-screen flex flex-row">
+      <div className='absolute z-20'>
         <ExpandableMenu/>
       </div>
-      <div className='relative z-10 h-screen flex flex-col'>
-        <div className='bg-white h-80 w-85 sm:h-5/12 md:h-6/12 sm:w-3/5 md:w-3/5 lg:w-1/2 xl:w-1/3 m-auto rounded-lg flex flex-col justify-center'>{/*caixa central*/}
+      <div>
+        <Logo/>
+      </div>
+      <div className='relative z-10 flex h-screen w-12/12'>
+        <div className='bg-white shadow-xl/20 h-100 w-85 sm:h-5/12 md:h-7/12 sm:w-3/5 md:w-3/5 lg:w-1/2 xl:w-1/3 m-auto rounded-3xl'>{/*caixa central*/}
+          <div className='font-p text-3xl h-3/12 w-1/1 flex flex-col'>
+            <div className='m-auto'>
+              <p>Login</p>
+            </div>
+          </div>
           <div className='h-5/12 w-12/12 flex flex-col mb-8'>
             <div className='h-1/1 w-4/6 m-auto'>{/*div-email*/}
               <p className='font-p'>
@@ -56,7 +65,7 @@ function Login() {
               <input type="email"
               value={email}
               onChange={(e)=>setEmail(e.target.value)}
-              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5'/>
+              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5 pt-4 pl-2 text-lg'/>
             </div>
             <div className='h-1/1 w-4/6 flex flex-col m-auto'>{/*div-senha*/}
               <p className='font-p'>
@@ -65,23 +74,11 @@ function Login() {
               <input type="password" 
               value={password} 
               onChange={(e)=>setPassword(e.target.value)}
-              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5  '/>
+              className='bg-gray-300 h-6/12 w-1/1 rounded-sm sm:w-12/12 lg:w-12/12 xl:w-1/1 mb-2.5 pt-4 pl-2 text-lg'/>
             </div> 
           </div>
         <div className='text-center'>{/*div-botao*/}
-          <button onClick={handleLogin}
-          className='
-          font-p
-          bg-black
-          text-white 
-          pt-2 pb-2 pl-3.5 pr-3.5 
-          rounded-md
-          hover:bg-[#8A96BE]
-          hover:text-black
-          hover:
-          active:bg-[#8A96BE]
-          transition-colors duration-500 delay-50
-          '>enviar</button>
+          <Button type='button' onClick={handleLogin}>login</Button>
           {erro && <p className='text-red-500 mt-2'>{erro}</p>}
         </div>
       </div>

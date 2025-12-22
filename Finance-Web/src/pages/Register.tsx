@@ -1,7 +1,8 @@
 import '../index.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IoIosArrowForward } from "react-icons/io";
+import ExpandableMenu from '../components/ExpandableMenu';
+import { Button } from '../components/Button';
 
 function Register(){
     const navigate=useNavigate();
@@ -47,30 +48,27 @@ function Register(){
             navigate('http://localhost:5173/login');
         }catch(error){
             console.error(error);
-            setErro('Falha na conexao com servidor .');
+            setErro('The connection to the server failed');
         }
     };
 
 
     return(
     <>
-        <div className='noise gradt h-screen w-screen flex flex-col'>
-            <div className='realtive z-10 menu'>
-                <button onClick={toggleMenu}
-                className={`absolute ${isMenuOpen?'rotate-90':'rotate-0'}`}>
-                    <IoIosArrowForward className='IoIosArrowForward '/>
-                </button>
-                {isMenuOpen && (
-                    <div className='bg-gray-200 flex flex-col mt-30 z-20 p-1 rounded-sm'>
-                        <a href="/" className='font-p'>Home</a>
-                        <a href="/login" className='font-p'>Login</a>
-                    </div>
-                )}
+        <div className='noise gradt h-screen w-screen flex flex-row'>
+            <div className='absolute z-20'>
+                <ExpandableMenu/>
             </div>
-            <div className='relative z-10 h-9/12 w-12/12 m-auto justify-center'>
-                    <div className='bg-white h-11/12 w-80 sm:w-7/12 lg:w-7/12 xl:w-4/10 m-auto rounded-lg flex flex-col justify-center'>{/*central-box*/}
-                        <div className='h-7/12 ml-7'>
-                            <div className='h-1/5'>{/*name*/}
+            <div className='relative z-10 flex h-screen w-screen'>
+                <div className='bg-white flex flex-col h-9/12 w-85 sm:w-7/12 lg:w-7/12 xl:w-5/10 m-auto rounded-3xl'>{/*central-box*/}
+                    <div className='font-p text-3xl h-20 w-1/1 flex flex-col'>
+                        <div className='m-auto'>
+                            <p>Registrar</p>
+                        </div>
+                    </div>
+                    <div className='h-7/12 w-11/12 flex ml-15'>
+                        <div className='h-1/1 w-1/1 flex flex-col justify-center'>
+                            <div className='h-3/11'>{/*name*/}
                                 <p className='font-p pl-0.5'>Name</p>
                                 <input type="text" 
                                 value={name}
@@ -78,7 +76,7 @@ function Register(){
                                 className='inputRegister w-11/12 sm:w-8/12 lg:w-8/12 xl:w-9/12'
                                 />
                             </div>
-                            <div className='h-1/5 '>{/*email*/}
+                            <div className='h-3/11'>{/*email*/}
                                 <p className='font-p pl-0.5'>Email</p>
                                 <input type="email" 
                                 value={email}
@@ -86,7 +84,7 @@ function Register(){
                                 className='inputRegister w-10/12 sm:w-6/12 lg:w-7/12 xl:w-8/12'
                                 />
                             </div>
-                            <div className='h-1/5 '>{/*cpf*/}
+                            <div className='h-3/11'>{/*cpf*/}
                                 <p className='font-p pl-0.5'>Cpf</p>
                                 <input type="text" 
                                 value={cpf}
@@ -94,7 +92,7 @@ function Register(){
                                 className='inputRegister w-8/12 sm:w-4/12 lg:w-5/12 xl:w-5/12'
                                 />
                             </div>
-                            <div className='h-1/5'>{/*password*/}
+                            <div className='h-3/11'>{/*password*/}
                                 <p className='font-p pl-0.5'>Password</p>
                                 <input type="password" 
                                 value={password}
@@ -102,28 +100,13 @@ function Register(){
                                 className='inputRegister w-9/12 sm:w-5/12 lg:w-6/12 xl:w-6/12'
                                 />
                             </div>
-                            
                         </div>
-                        <div className='mt-10 mb-10 ml-auto mr-auto'>{/*Botao */}
-                            <button 
-                            onClick={handleRegister}
-                            className='
-                            font-p
-                            bg-black
-                            text-white 
-                            pt-2 pb-2 pl-3.5 pr-3.5 
-                            rounded-md
-                            hover:bg-[#8A96BE]
-                            hover:text-black
-                            hover:
-                            active:bg-[#8A96BE]
-                            transition-colors duration-500 delay-50
-                            '>
-                                registrar
-                            </button>
-                        </div>
-                        {erro && <p className='text-red-500 text-center mt-2 font-Jura'>{erro}</p>}
                     </div>
+                    <div className='mt-10 mb-10 ml-auto mr-auto'>{/*Botao */}
+                        <Button onClick={handleRegister} className='w-21 hover:w-24'>register</Button>
+                    </div>
+                    {erro && <p className='text-red-500 text-center mt-2 font-Jura'>{erro}</p>}
+                </div>
             </div>
         </div>
     </>

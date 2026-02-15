@@ -16,7 +16,7 @@ export default function ExpandableMenu(){
     return(
         <div className="z-10 menu">
         <button onClick={toggleMenu}
-            className={`absolute ${isMenuOpen?'rotate-90':'rotate-0'}`}>
+            className={`absolute transition-transform duration-200 ${isMenuOpen?'rotate-90':'rotate-0'}`}>
             <IoIosArrowForward className='IoIosArrowForward '/>
         </button>
         {isMenuOpen&&(

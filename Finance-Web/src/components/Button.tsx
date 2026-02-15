@@ -1,5 +1,4 @@
-import type { HtmlHTMLAttributes } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";//button used for login and register
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
     variant?:'primary'|'danger';

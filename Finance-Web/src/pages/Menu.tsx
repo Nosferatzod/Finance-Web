@@ -1,9 +1,58 @@
 import '../index.css'
 import ExpandableMenu from '../components/ExpandableMenu';
-import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
+import {MonthSelector} from '../components/MonthSelector';
+import { useEffect, useState } from 'react';
 
-function User(){
+interface DashboardData{
+        totalIncome:number;
+        totalExpense:number;
+        balance:number;
+    }
+
+function Menu(){
+    const [dashboard, setDashboard]=useState<DashboardData>({balance:0, totalIncome:0, totalExpense:0});
+    const [mesSelecionado, setMesSelecionado]=useState('Janeiro');
+    useEffect(()=>{
+        const carregarDados=async()=>{
+            const mesesMap:{[key:string]:number}={
+                "Janeiro": 1, "Fevereiro": 2, "Março": 3, "Abril": 4,
+                "Maio": 5, "Junho": 6, "Julho": 7, "Agosto": 8,
+                "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
+            }
+            const mesNumero=mesesMap[mesSelecionado] || 1;
+            const anoAtual=new Date().getFullYear();
+            try{
+                const token=localStorage.getItem('tokenJwt');
+                console.log(mesNumero, anoAtual);
+                const url=`http://localhost:8080/api/dashboard?month=${mesNumero}&year=${anoAtual}`;
+                const response=await fetch(url, {//envia as informacoes de acesso
+                    method: 'GET',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'Authorization':`Bearer ${token}`
+                    }
+                });
+                if(response.ok){
+                    const dadosDoBack=await response.json();
+                    console.log(dadosDoBack);
+                    setDashboard(dadosDoBack);
+                }else{
+                    console.error("Erro ao buscar o dashboard", response.status);
+                }
+            }catch(erro){
+                console.error("Erro de conexao", erro);
+            }
+        };
+        carregarDados();
+    }, [mesSelecionado]);//executa novamente caso o mes seja alterado
+
+        const formatarMoeda=(valor:number)=>{
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        };
     
     return(
         <>
@@ -14,29 +63,22 @@ function User(){
                 <div>
                     <Logo/>
                 </div>
-                <div className='w-screen h-screen flex items-end justify-center z-10'>
-                    <div className='bg-white w-11/12 h-10/12 p-10 rounded-tl-3xl rounded-tr-3xl z-20 flex flex-row'>{/*caixa central */}
-                        <div>
-                            {/* <button className='bg-gray-300 w-40 h-10 flex rounded-xl 
-                            shadow-xl 
-                            transition-all 
-                            duration-500
-                            hover:bg-white
-                            hover:w-42
-                            hover:h-11'>
-                                <Link to="" className='flex items-center m-auto'>Create Transaction</Link>
-                            </button> */}
-                            <p>Mês: </p>
-                            
+                <div className='w-screen h-screen flex items-end justify-center'>
+                    <div className='bg-white w-11/12 h-10/12 p-10 rounded-tl-3xl z-10 rounded-tr-3xl flex flex-row'>{/*caixa central */}
+                        <div className='z-30 flex flex-row pr-4'>
+                            <p className='mr-2'>Mês: </p>
+                            <div className=''>
+                                <MonthSelector selectedMonth={mesSelecionado} onMonthChange={setMesSelecionado}/>
+                            </div>
                         </div>
-                        <div>
-                            <p>Saldo: </p>
+                        <div className='pr-4'>
+                            <p>Saldo: {formatarMoeda(dashboard.balance)}</p>
                         </div>
-                        <div>
-                            <p>Receitas: </p>
+                        <div className='pr-4'>
+                            <p>Receitas: {formatarMoeda(dashboard.totalIncome)}</p>
                         </div>
-                        <div>
-                            <p>Despesas: </p>
+                        <div className='pr-4'>
+                            <p>Despesas: {formatarMoeda(dashboard.totalExpense)}</p>
                         </div>
                         <div>
 
@@ -48,4 +90,4 @@ function User(){
     )
 }
 
-export default User;
+export default Menu;

@@ -12,14 +12,6 @@ function Register(){
     const [cpf, setCpf]=useState('');
     const [password, setPassword]=useState('');
     const [erro, setErro]=useState('');
-    const [isMenuOpen, setIsMenuOpen]=useState(false);
-
-    const toggleMenu=()=>{
-    setIsMenuOpen(!isMenuOpen);
-    };
-
-
-
 
     const handleRegister=async()=>{
         setErro('');

@@ -1,7 +1,6 @@
 import '../index.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
 import ExpandableMenu from '../components/ExpandableMenu';
 import { Button } from '../components/Button';
 import { Logo } from '../components/Logo';
@@ -11,12 +10,6 @@ function Login() {
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
   const [erro, setErro]=useState('');
-  const [isMenuOpen, setIsMenuOpen]=useState(false);
-  const isLoggedIn=useAuth();
-
-  const toggleMenu=()=>{
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const handleLogin=async(e:React.FormEvent)=>{
     e.preventDefault();
@@ -35,7 +28,7 @@ function Login() {
       const data=await response.json();
       const token=data.token;
       localStorage.setItem('tokenJwt', token);
-      navigate('/user');
+      navigate('/menu');
     }catch(error){
       setErro('incorrect email or passowrd');
     }

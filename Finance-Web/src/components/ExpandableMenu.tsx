@@ -37,7 +37,7 @@ export default function ExpandableMenu(){
 
                 {isLoggedIn() && currentPath!=='/user' &&(
                     <>
-                        <Link to="/user">menu</Link>
+                        <Link to="/menu">menu</Link>
                     </>
                 )}
 

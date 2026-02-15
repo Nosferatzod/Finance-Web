@@ -16,7 +16,7 @@ export function MonthSelector({selectedMonth, onMonthChange}:MonthSelectorProps)
     };
 
     return(
-        <div className="relative inline-block text-left font-p z-10">
+        <div className="relative inline-block text-left font-p z-20">
             <button type="button" onClick={()=> setIsOpen(!isOpen)} className="h-8 w-35 -mt-2 px-4 flex items-center  rounded-md border-gray-300 bg-white text-sm font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <span>
                     {selectedMonth}
@@ -26,7 +26,7 @@ export function MonthSelector({selectedMonth, onMonthChange}:MonthSelectorProps)
                 </div>
             </button>
             {isOpen&&(
-                <div className="absolute transition-transform transform-200 right-0 z-20 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-60 overflow-y-auto">
+                <div className="absolute transition-transform transform-200 right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-60 overflow-y-auto">
                     <div className="py-1">
                         {months.map((months)=>(
                             <button key={months} onClick={()=>handleSelect(months)} className={`block w-full px-4 py-2 text-left text-sm hover:bg-blue-50 hover:text-blue-700 ${selectedMonth===months?"bg-blue-100 text-blue-800 font-bold":"text-gray-700"}`}>

@@ -43,7 +43,7 @@ function Login() {
       <div>
         <Logo/>
       </div>
-      <div className='relative z-10 flex h-screen w-12/12'>
+      <div className='relative z-10 flex h-screen w-screen'>
         <div className='bg-white shadow-box-custom h-100 w-85 sm:h-5/12 md:h-7/12 sm:w-3/5 md:w-3/5 lg:w-1/2 xl:w-1/3 m-auto rounded-3xl'>{/*caixa central*/}
           <div className='font-p text-3xl h-3/12 w-1/1 flex flex-col'>
             <div className='m-auto'>

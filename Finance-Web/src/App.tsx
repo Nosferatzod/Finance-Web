@@ -16,7 +16,6 @@ function App(){
             <Route path='/menu' element={<Menu/>} />
             <Route path='/transaction' element={<CreateTransaction/>}/>
             <Route element={<PrivateRoute/>}>
-                
             </Route>
         </Routes>
     );

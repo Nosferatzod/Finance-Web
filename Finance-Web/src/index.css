@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
 @import "tailwindcss";
 
+input::-webkit-outer-spin-button,/*REMOVE SETAS CAMPO NUMERICO*/
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {/*REMOVE SETAS CAMPO NUMERICO*/
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
 
 :root{
     background-color: white;

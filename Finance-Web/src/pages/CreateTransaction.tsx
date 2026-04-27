@@ -6,6 +6,7 @@ import { Select } from '../components/Select';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { SucessModal } from '../components/SuccessModal';
 
 function CreateTransaction(){
     const navigate=useNavigate();
@@ -25,6 +26,8 @@ function CreateTransaction(){
     const [accounts, setAccounts] = useState<{ value: string; label: string }[]>([]);
     const [banks, setBanks] = useState<{ value: string; label: string }[]>([]);
     const [categorys, setCategorys] = useState<{value: string; label: string}[]>([]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     interface AccountFromBack{
         id: number;
@@ -78,17 +81,16 @@ function CreateTransaction(){
         return Object.keys(newErrors).length===0;
     }
 
-    const bankOptions=Array.from(new Set(accountsRaw.map(a=> a.bank_name)))
+    const bankOptions=Array.from(new Set(accountsRaw.map(a=> a.bank_name))) //FILTRA BASEADO NO BANCO ---
         .map(name=>({value:name, label:name}));
-
     const accountOptions=accountsRaw.filter(a=>a.bank_name===bankSelected)
         .map(a=>({value:String(a.id), label: a.description}));
 
     const handleCreateTransaction=async(e: React.FormEvent)=>{//POST PARA O ENDPOINT ---
         e.preventDefault(); //evita que a pagina recarregue
-        if(!validateFields()){
-            return;
-        }
+
+        if(!validateFields()) return;
+
         try{
             const token=localStorage.getItem('tokenJwt');
             const response=await fetch('http://localhost:8080/api/transactions', {
@@ -105,9 +107,10 @@ function CreateTransaction(){
                     category:categorySelected
                 }),
             });
-            if(!response.ok){
-                alert('erro');
-                throw new Error('Erro ao registrar transação. Tente novamente.')
+            if(response.ok){
+                setIsModalOpen(true);
+            }else{
+                setErro('Erro ao salvar a transação!')
             }
         }catch(error){
             console.error(erro);
@@ -151,13 +154,13 @@ function CreateTransaction(){
                                     </Select>
                                     {errors.transactionType&&<span className="text-red-500 text-xs">{errors.transactionType}</span>}
                                 </div>
-                                <div className='md:col-span-3 flex flex-col gap-2'>
+                                <div className='md:col-span-2 flex flex-col gap-2'>
                                     <label htmlFor="">Banco</label>
                                     <Select name="BankId" id="" options={bankOptions} value={bankSelected} onChange={(e)=>{setBankSelected(e.target.value); setAccountSelected(""); }}>
                                         <option value="" disabled selected>Selecione o banco</option>
                                     </Select>
                                 </div>
-                                <div className='md:col-span-2 flex flex-col gap-3'>
+                                <div className='md:col-span-3 flex flex-col gap-2'>
                                     <label htmlFor="">Conta</label>
                                     <Select name="accounts" id="" options={accountOptions} value={accountSelected} onChange={(e) => setAccountSelected(e.target.value)} disabled={!bankSelected}>
                                         <option value="" disabled selected>{bankSelected ? "Selecione a conta":"Selecione o banco primeiro"}</option>
@@ -167,7 +170,7 @@ function CreateTransaction(){
                                 <div className='md:col-span-3 flex flex-col gap-2'>
                                     <label htmlFor="">Categoria</label>
                                     <Select name='categorys' id="" options={categorys} value={categorySelected} onChange={(e)=> setCategorySelected(e.target.value)}>
-                                        <option value="">Selecione uma categoria</option>
+                                        <option value="" disabled selected>Selecione uma categoria</option>
                                     </Select>
                                     {errors.categorys&&<span className="text-red-500 text-xs">{errors.categorys}</span>}
                                 </div>
@@ -195,6 +198,12 @@ function CreateTransaction(){
                                     <Button className='w-40' to='/menu'>Voltar ao menu</Button>
                                 </div>
                             </div>
+                            <SucessModal 
+                                isOpen={isModalOpen} 
+                                onClose={() => setIsModalOpen(false)}
+                                title="Tudo certo!"
+                                message="Sua transação foi registrada e o saldo da conta já foi atualizado."
+                            />
                         </div>
                     </div>
                 </div>
